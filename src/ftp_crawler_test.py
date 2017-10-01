@@ -4,10 +4,13 @@ import unittest
 class FakeFtpLib:
     file_structure = {
         "Dir1": {
-            "Subdir1": [
-                "Entry1",
-                "Entry2",
-            ]
+            "children": {
+                "Subdir1": [
+                    "Entry1",
+                    "Entry2",
+                ]
+            },
+            "dirent" : "drwxrwsr-x    2 1815     3502        36864 Aug 24 07:48 Dir1"
         },
         "Dir2": {
             "Subdir1": [
@@ -28,7 +31,7 @@ class FakeFtpLib:
     def cwd(self, path):
         self.working_dir = self.file_structure[path]
 
-    def nlst(self, cmd):
+    def dir(self, cmd):
         return [entry for entry in self.working_dir]
 
 class FtpCrawlerTest(unittest.TestCase):
@@ -40,14 +43,12 @@ class FtpCrawlerTest(unittest.TestCase):
         self.assertIsNotNone(ftp)
 
     def test_get_all_entries(self):
-        ftp = FtpCrawler("/Dir1/Subdir1", self.ftp_lib)
+        ftp = FtpCrawler("/Dir1", self.ftp_lib)
         expected_result = {
-            "Dir1": {
-                "Subdir1": [
-                    "Entry1",
-                    "Entry2",
-                ]
-            }
+            "Subdir1": [
+                "Entry1",
+                "Entry2",
+            ]
         }
 
         actual_result = ftp.get_all_entries()
