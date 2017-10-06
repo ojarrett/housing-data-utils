@@ -24,4 +24,5 @@ class HousingDFBuilder:
             print("Failed to extract header lines. Exiting...")
             exit(1)
 
-        print(pd.read_csv(self.csv, header=None, skiprows=csv_utils.CSV_HEADER_LINES, names=header))
+        temp_df = pd.read_csv(self.csv, header=None, skiprows=csv_utils.CSV_HEADER_LINES, names=header)
+        return temp_df if self.filter_fields is None else temp_df[self.filter_fields]
