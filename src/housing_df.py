@@ -27,8 +27,6 @@ class HousingDFBuilder:
         self.filter_fields = filter_fields
 
     def __file_matches(self, file_name):
-        result = True
-
         if self.csv_prefix is not None:
             if not file_name.startswith(self.csv_prefix):
                 return False
@@ -36,6 +34,8 @@ class HousingDFBuilder:
         if self.csv_suffix is not None:
             if not file_name.endswith(self.csv_suffix):
                 return False
+
+        return True
 
     def build(self):
 
