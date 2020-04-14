@@ -1,4 +1,4 @@
-from src.housing_df import HousingDFBuilder
+from housing_df import HousingDFBuilder
 
 VALID_REGIONS = ['mw', 'ne', 'so', 'we']
 CURRENT_MONTH_CSV_SUFFIX = "c.txt"
@@ -16,6 +16,8 @@ def get_housing_df_for_region(region):
     housing_dfb.set_csv_prefix(region)
     housing_dfb.set_csv_suffix(CURRENT_MONTH_CSV_SUFFIX)
     housing_dfb.set_csv_dir(DATA_DIR)
+    housing_dfb.set_before_date(210001)
+    housing_dfb.set_after_date(199912)
 
     df = housing_dfb.build()
 
