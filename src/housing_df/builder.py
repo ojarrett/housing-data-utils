@@ -1,8 +1,7 @@
-import numpy as np
-import pandas as pd
-import csv_utils as csv_utils
-import os
+from housing_df import csv as csv_utils
 
+import os
+import pandas as pd
 import numpy as np
 
 FILE_NAME_SURVEY_DATE_INDEX_START = 2

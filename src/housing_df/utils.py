@@ -1,4 +1,4 @@
-from housing_df import HousingDFBuilder
+from housing_df.builder import HousingDFBuilder
 
 VALID_REGIONS = ['mw', 'ne', 'so', 'we']
 CURRENT_MONTH_CSV_SUFFIX = "c.txt"

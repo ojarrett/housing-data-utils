@@ -1,4 +1,4 @@
-from housing_df_utils import get_housing_df_for_region
+from housing_df.utils import get_housing_df_for_region
 
 def test_get_housing_df_for_region():
     df = get_housing_df_for_region('we', csv_dir='test/data')
