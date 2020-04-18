@@ -1,2 +1,4 @@
 *.pyc
 data/*.txt
+venv
+*egg-info*
