@@ -1,18 +1,19 @@
 import ftplib
 from ftplib import FTP
-from ftp_downloader import FtpDownloader
-from ftp_crawler import FtpCrawler
+from sync.ftp_downloader import FtpDownloader
+from sync.ftp_crawler import FtpCrawler
 
 class FtpSync:
     DEFAULT_FTP_TIMEOUT = 5
     DEFAULT_FTP_CONNECT_RETRIES = 10
-    def __init__(self, host, dest_dir, ftp_timeout=DEFAULT_FTP_TIMEOUT, ftp_connect_retries=DEFAULT_FTP_CONNECT_RETRIES):
+    def __init__(self, host, dest_dir, ftp_timeout=DEFAULT_FTP_TIMEOUT, ftp_connect_retries=DEFAULT_FTP_CONNECT_RETRIES, new_file_limit=1000):
         self.host = host
         self.dest_dir = dest_dir
         # Lazy init
         self.connection = None
         self.ftp_timeout = ftp_timeout
         self.ftp_connect_retries = ftp_connect_retries
+        self.new_file_limit = new_file_limit
 
     def __try_ftp_connect(self):
         attempt = 0
@@ -33,4 +34,4 @@ class FtpSync:
         ftp_downloader = FtpDownloader(ftplib=self.connection,
                 dest_path=self.dest_dir)
 
-        ftp_downloader.download_all(path_list=ftp_crawler.get_all_entries())
+        ftp_downloader.download_all(path_list=ftp_crawler.get_all_entries(), limit=self.new_file_limit)

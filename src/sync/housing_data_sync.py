@@ -1,4 +1,4 @@
-from ftp_sync import FtpSync
+from sync.ftp_sync import FtpSync
 import sys
 import os
 

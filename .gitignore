@@ -2,3 +2,4 @@
 data/*.txt
 venv
 *egg-info*
+test/ftp_sync_test_new_data/*
