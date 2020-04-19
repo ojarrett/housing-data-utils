@@ -34,3 +34,22 @@ class HousingUnitCountDF(SpecificDF):
         ]
 
         super().__init__(df)
+
+class MetroDF(SpecificDF):
+    def __init__(self, df, cbsa_code):
+        self.filter_rows = {'CBSA Code': cbsa_code}
+        self.filter_fields = None
+        self.groupby_place = None
+        super().__init__(df)
+
+    def __group_by_place(self):
+        if self.groupby_place is None:
+            self.groupby_place = self.df.groupby('Place Name')
+
+    def most_apartments(self, count=10):
+        self.__group_by_place()
+        return self.groupby_place['5+ units Units'].sum().sort_values(ascending=False)[0:count]
+
+    def most_houses(self, count=10):
+        self.__group_by_place()
+        return self.groupby_place['1-unit Units'].sum().sort_values(ascending=False)[0:count]
