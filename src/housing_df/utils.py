@@ -1,4 +1,5 @@
 from housing_df.builder import HousingDFBuilder
+from housing_df.registry import HousingDFRegistry
 
 VALID_REGIONS = ['mw', 'ne', 'so', 'we']
 CURRENT_MONTH_CSV_SUFFIX = "c.txt"
@@ -22,3 +23,10 @@ def get_housing_df_for_region(region, csv_dir=DATA_DIR):
     df = housing_dfb.build()
 
     return df
+
+def build_housing_df_registry_for_all_regions():
+    registry = HousingDFRegistry()
+    for region in VALID_REGIONS:
+        registry.add(get_housing_df_for_region(region))
+
+    return registry
