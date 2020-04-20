@@ -50,6 +50,14 @@ class MetroDF(SpecificDF):
         self.__group_by_place()
         return self.groupby_place['5+ units Units'].sum().sort_values(ascending=False)[0:count]
 
+    def most_duplexes(self, count=10):
+        self.__group_by_place()
+        return self.groupby_place['2-units Units'].sum().sort_values(ascending=False).iloc[0:count]
+
+    def most_tri_quad_plexes(self, count=10):
+        self.__group_by_place()
+        return self.groupby_place['3-4 units Units'].sum().sort_values(ascending=False).iloc[0:count]
+
     def most_houses(self, count=10):
         self.__group_by_place()
         return self.groupby_place['1-unit Units'].sum().sort_values(ascending=False)[0:count]
@@ -68,6 +76,14 @@ class RegionDF(SpecificDF):
     def most_apartments(self, count=10):
         self.__group_by_cbsa()
         return self.groupby_cbsa['5+ units Units'].sum().sort_values(ascending=False).iloc[0:count]
+
+    def most_duplexes(self, count=10):
+        self.__group_by_cbsa()
+        return self.groupby_cbsa['2-units Units'].sum().sort_values(ascending=False).iloc[0:count]
+
+    def most_tri_quad_plexes(self, count=10):
+        self.__group_by_cbsa()
+        return self.groupby_cbsa['3-4 units Units'].sum().sort_values(ascending=False).iloc[0:count]
 
     def most_houses(self, count=10):
         self.__group_by_cbsa()

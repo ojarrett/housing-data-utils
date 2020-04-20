@@ -1,5 +1,7 @@
 from housing_df.builder import HousingDFBuilder
+from housing_df.place import Place
 from housing_df.registry import HousingDFRegistry
+from housing_df.specific import MetroDF
 
 VALID_REGIONS = ['mw', 'ne', 'so', 'we']
 CURRENT_MONTH_CSV_SUFFIX = "c.txt"
@@ -30,3 +32,7 @@ def build_housing_df_registry_for_all_regions():
         registry.add(get_housing_df_for_region(region))
 
     return registry
+
+def get_metro_df_for_place(reg, place_name):
+    place = Place(reg.get_df_for_place(place_name), place_name)
+    return place.get_metro_df()
