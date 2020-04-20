@@ -6,18 +6,21 @@ class HousingDFRegistry:
     def __init__(self):
         self.place_to_df = {}
         self.cbsa_to_df = {}
+        self.df_list = []
         if HousingDFRegistry.instance is None:
             HousingDFRegistry.instance = self
 
     def get_instance():
         return HousingDFRegistry.instance
 
-    def add(self, df):
+    def add(self, df, label):
         for place in np.unique(df['Place Name'].values):
             self.place_to_df[place] = df
 
         for cbsa in np.unique(df['CBSA Code'].values):
             self.cbsa_to_df = df
+
+        self.df_list.append((df, label))
 
     def get_df_for_place(self, place):
         if place in self.place_to_df:
@@ -30,3 +33,7 @@ class HousingDFRegistry:
             return self.cbsa_to_df[cbsa]
 
         return None
+
+    def save_all(self, data_dir="", prefix=None):
+        for (df,label) in self.df_list:
+            df.to_pickle("{0}/{1}_saved.pkl".format(data_dir, label))

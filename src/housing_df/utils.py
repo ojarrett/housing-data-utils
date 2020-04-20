@@ -3,6 +3,9 @@ from housing_df.place import Place
 from housing_df.registry import HousingDFRegistry
 from housing_df.specific import MetroDF
 
+import os
+import pandas as pd
+
 VALID_REGIONS = ['mw', 'ne', 'so', 'we']
 CURRENT_MONTH_CSV_SUFFIX = "c.txt"
 DATA_DIR = "data"
@@ -29,10 +32,24 @@ def get_housing_df_for_region(region, csv_dir=DATA_DIR):
 def build_housing_df_registry_for_all_regions():
     registry = HousingDFRegistry()
     for region in VALID_REGIONS:
-        registry.add(get_housing_df_for_region(region))
+        saved_df_path = "{0}/{1}_saved.pkl".format(DATA_DIR,region)
+        if os.path.exists(saved_df_path):
+            df = pd.read_pickle(saved_df_path)
+        else:
+            df = get_housing_df_for_region(region)
+        registry.add(df, region)
 
     return registry
 
-def get_metro_df_for_place(reg, place_name):
+def save_all_dfs_in_registry(DATA_DIR):
+    instance = HousingDFRegistry.get_instance()
+    if instance is None:
+        return
+
+    instance.save_all()
+
+def get_metro_df_for_place(place_name, reg=None):
+    if reg is None:
+        reg = HousingDFRegistry.get_instance()
     place = Place(reg.get_df_for_place(place_name), place_name)
     return place.get_metro_df()
