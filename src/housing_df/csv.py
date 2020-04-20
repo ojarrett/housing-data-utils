@@ -12,7 +12,7 @@ def get_header_lines_from_file(file_path, translate=True):
             for i in range(len(header_lines[0])):
                 if header_lines[0][i] == "" and i < len(header_lines[0]) - 1 and "unit" in header_lines[0][i+1]:
                     header_lines[0][i] = header_lines[0][i+1]
-                if header_lines[0][i] == "" and "units" in header_lines[0][i-1]:
+                if header_lines[0][i] == "" and "unit" in header_lines[0][i-1]:
                     header_lines[0][i] = header_lines[0][i-1]
 
             header_lines[0].append(header_lines[0][len(header_lines[0])-1])
