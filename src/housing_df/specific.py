@@ -53,3 +53,22 @@ class MetroDF(SpecificDF):
     def most_houses(self, count=10):
         self.__group_by_place()
         return self.groupby_place['1-unit Units'].sum().sort_values(ascending=False)[0:count]
+
+class RegionDF(SpecificDF):
+    def __init__(self, df, region):
+        self.filter_rows = None
+        self.filter_fields = None
+        self.groupby_cbsa = None
+        super().__init__(df)
+
+    def __group_by_cbsa(self):
+        if self.groupby_cbsa is None:
+            self.groupby_cbsa = self.df.groupby('CBSA Code')
+
+    def most_apartments(self, count=10):
+        self.__group_by_cbsa()
+        return self.groupby_cbsa['5+ units Units'].sum().sort_values(ascending=False).iloc[0:count]
+
+    def most_houses(self, count=10):
+        self.__group_by_cbsa()
+        return self.groupby_cbsa['1-unit Units'].sum().sort_values(ascending=False).iloc[0:count]
