@@ -8,7 +8,7 @@ class FtpDownloader:
     def __file_exists(self, name):
         return  os.path.exists(self.dest_path + "/" + name)
 
-    def download_all(self, path_list, limit=1000):
+    def download_all(self, path_list, limit=10000):
         new_file_count = 0
         for path in path_list:
             if new_file_count >= limit:

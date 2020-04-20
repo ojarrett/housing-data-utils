@@ -6,7 +6,7 @@ from sync.ftp_crawler import FtpCrawler
 class FtpSync:
     DEFAULT_FTP_TIMEOUT = 5
     DEFAULT_FTP_CONNECT_RETRIES = 10
-    def __init__(self, host, dest_dir, ftp_timeout=DEFAULT_FTP_TIMEOUT, ftp_connect_retries=DEFAULT_FTP_CONNECT_RETRIES, new_file_limit=1000):
+    def __init__(self, host, dest_dir, ftp_timeout=DEFAULT_FTP_TIMEOUT, ftp_connect_retries=DEFAULT_FTP_CONNECT_RETRIES, new_file_limit=10000):
         self.host = host
         self.dest_dir = dest_dir
         # Lazy init
