@@ -1,6 +1,7 @@
 *.pyc
 data/*.txt
 data/*.xls
+data/*.pkl
 venv
 *egg-info*
 test/ftp_sync_test_new_data/*

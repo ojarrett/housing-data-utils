@@ -18,7 +18,7 @@ class HousingDFRegistry:
             self.place_to_df[place] = df
 
         for cbsa in np.unique(df['CBSA Code'].values):
-            self.cbsa_to_df[cbsa] = df
+            self.cbsa_to_df[str(cbsa)] = df
 
         self.df_list.append((df, label))
 
@@ -29,8 +29,8 @@ class HousingDFRegistry:
         return None
 
     def get_df_for_cbsa(self, cbsa):
-        if cbsa in self.cbsa_to_df:
-            return self.cbsa_to_df[cbsa]
+        if str(cbsa) in self.cbsa_to_df:
+            return self.cbsa_to_df[str(cbsa)]
 
         return None
 

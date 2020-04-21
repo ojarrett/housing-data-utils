@@ -47,12 +47,12 @@ def build_housing_df_registry_for_all_regions(from_yearly_data=False):
 
     return registry
 
-def save_all_dfs_in_registry(DATA_DIR):
+def save_all_dfs_in_registry():
     instance = HousingDFRegistry.get_instance()
     if instance is None:
         return
 
-    instance.save_all()
+    instance.save_all(data_dir=DATA_DIR)
 
 def get_metro_df_for_place(place_name, reg=None):
     if reg is None:
