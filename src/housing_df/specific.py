@@ -1,7 +1,7 @@
 import pandas as pd
 
 class SpecificDF:
-    def __init__(self, df):
+    def __init__(self, df, start=201001, end=201912):
         new_df = df
 
         if self.filter_rows:
@@ -20,6 +20,10 @@ class PlaceDF(SpecificDF):
         self.filter_rows = {'Place Name': place_name}
         self.filter_fields = None
         super().__init__(df)
+
+    def get_unit_time_series(self, housing_type='5+ units Units', start=201001, end=201912):
+        df = self.df
+        return df[df['Survey Date'] <= end][df['Survey Date'] >= start][['Survey Date', housing_type]].sort_values(by="Survey Date")
 
 class HousingUnitCountDF(SpecificDF):
     def __init__(self, df):
@@ -48,7 +52,7 @@ class MetroDF(SpecificDF):
 
     def most_apartments(self, count=10):
         self.__group_by_place()
-        return self.groupby_place['5+ units Units'].sum().sort_values(ascending=False)[0:count]
+        return self.groupby_place['5+ units Units'].sum().sort_values(ascending=False).iloc[0:count]
 
     def most_duplexes(self, count=10):
         self.__group_by_place()
@@ -60,7 +64,10 @@ class MetroDF(SpecificDF):
 
     def most_houses(self, count=10):
         self.__group_by_place()
-        return self.groupby_place['1-unit Units'].sum().sort_values(ascending=False)[0:count]
+        return self.groupby_place['1-unit Units'].sum().sort_values(ascending=False).iloc[0:count]
+
+    def top_apartment_city(self):
+        return self.most_apartments(count=1).index[0]
 
 class RegionDF(SpecificDF):
     def __init__(self, df, region):
