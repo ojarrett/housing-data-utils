@@ -1,3 +1,5 @@
+import re
+
 CSV_HEADER_LINES = [0, 1]
 CSV_DELIMITER = ","
 
@@ -17,13 +19,14 @@ def get_header_lines_from_file(file_path, translate=True):
 
             header_lines[0].append(header_lines[0][len(header_lines[0])-1])
 
-
-        header = merge_header_lines(header_lines)
+            header = merge_header_lines(header_lines)
 
     if header is None:
         print("Failed to extract header lines. Exiting...")
         exit(1)
 
+    for line_num in range(len(header)):
+        header[line_num] = header[line_num].strip()
     return header
 
 def merge_header_lines(header_lines):

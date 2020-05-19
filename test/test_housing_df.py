@@ -1,6 +1,8 @@
 from housing_df.utils import get_housing_df_for_region
 from housing_df.specific import HousingUnitCountDF, PlaceDF
 from housing_df.csv import get_header_lines_from_file
+from housing_df.place_info import PlaceInfo
+from housing_df.registry import HousingDFRegistry
 
 import numpy as np
 
@@ -19,6 +21,16 @@ def test_place_df():
     assert len(place_df.df[place_df.df['Place Name'] == 'San Francisco']) == 0
     assert np.all(place_df.df['Place Name'] == 'Seattle')
 
+def test_place_info():
+    df = get_housing_df_for_region('we', csv_dir='test/data')
+    registry = HousingDFRegistry()
+    registry.add(df, 'we')
+
+    place_info = PlaceInfo(registry, sample_date=201510)
+    place_info.build()
+
+    assert len(place_info.df[place_info.df['Place Name'] == 'San Francisco']) == 1
+
 def test_get_header_lines_from_file():
     expected_header_lines = [
          'Survey Date',
@@ -28,7 +40,7 @@ def test_get_header_lines_from_file():
          'Census Place Code',
          'FIPS Place Code',
          'FIPS MCD Code',
-         'Pop ',
+         'Pop',
          'CSA Code',
          'CBSA Code',
          'Footnote Code',
