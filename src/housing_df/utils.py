@@ -35,10 +35,10 @@ def get_housing_df_for_region(region, csv_dir=DATA_DIR, from_yearly_data=False):
 
     return df
 
-def build_housing_df_registry_for_all_regions(from_yearly_data=False):
+def build_housing_df_registry_for_all_regions(from_yearly_data=False, data_dir=DATA_DIR):
     registry = HousingDFRegistry()
     for region in VALID_REGIONS:
-        saved_df_path = "{0}/{1}_saved.pkl".format(DATA_DIR,region)
+        saved_df_path = "{0}/{1}_saved.pkl".format(data_dir,region)
         if os.path.exists(saved_df_path):
             df = pd.read_pickle(saved_df_path)
         else:
