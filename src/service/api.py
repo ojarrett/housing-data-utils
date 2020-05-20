@@ -14,6 +14,9 @@ def get_city_info():
     place_info.build()
     df = place_info.df
 
+    # Pandas to_json does not include the index for record format JSON
+    df['id'] = df.index
+
     return df.to_json(orient='records')
 
 if __name__ == '__main__':
