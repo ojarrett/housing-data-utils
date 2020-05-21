@@ -31,6 +31,17 @@ def test_place_info():
 
     assert len(place_info.df[place_info.df['Place Name'] == 'San Francisco']) == 1
 
+def test_place_info_lookup_index():
+    df = get_housing_df_for_region('we', csv_dir='test/data')
+    registry = HousingDFRegistry()
+    registry.add(df, 'we')
+
+    place_info = PlaceInfo(registry, sample_date=201510)
+    place_info.build()
+
+    ind = place_info.df.index[0]
+    assert len(place_info.df.loc[ind]['Place Name']) > 0
+
 def test_get_header_lines_from_file():
     expected_header_lines = [
          'Survey Date',
