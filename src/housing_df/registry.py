@@ -34,6 +34,13 @@ class HousingDFRegistry:
 
         return None
 
+    def get_df_for_region(self, region):
+        for (df, label) in self.df_list:
+            if label == region:
+                return df
+
+        return None
+
     def save_all(self, data_dir="data"):
         for (df,label) in self.df_list:
             df.to_pickle("{0}/{1}_saved.pkl".format(data_dir, label))

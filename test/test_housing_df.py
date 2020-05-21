@@ -3,6 +3,7 @@ from housing_df.specific import HousingUnitCountDF, PlaceDF
 from housing_df.csv import get_header_lines_from_file
 from housing_df.place_info import PlaceInfo
 from housing_df.registry import HousingDFRegistry
+from housing_df.series_builder import HousingSeriesBuilder
 
 import numpy as np
 
@@ -41,6 +42,30 @@ def test_place_info_lookup_index():
 
     ind = place_info.df.index[0]
     assert len(place_info.df.loc[ind]['Place Name']) > 0
+
+def test_series_basic():
+    df = get_housing_df_for_region('we', csv_dir='test/data')
+    
+    series_builder = HousingSeriesBuilder(df)
+    series = series_builder.build()
+
+    assert len(series.index) == len(df.index)
+
+def test_series_one_filter():
+    df = get_housing_df_for_region('we', csv_dir='test/data')
+    
+    series_builder = HousingSeriesBuilder(df)
+    series = series_builder.build(start_date=201511)
+
+    assert len(series.index) < len(df.index)
+
+def test_series_two_filters():
+    df = get_housing_df_for_region('we', csv_dir='test/data')
+    
+    series_builder = HousingSeriesBuilder(df)
+    series = series_builder.build(start_date=201511, end_date=201511)
+
+    assert len(series.index) < len(df.index)
 
 def test_get_header_lines_from_file():
     expected_header_lines = [
