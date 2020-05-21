@@ -32,10 +32,11 @@ def get_city_housing_data(place_id):
     start = int(request.args['start']) if 'start' in request.args else None
     end = int(request.args['end']) if 'end' in request.args else None
 
-    series = HousingSeriesBuilder(housing)
-    series.build(place_name, start, end)
+    series_builder = HousingSeriesBuilder(housing)
+    series = series_builder.build(place_name, start, end)
+    print("Start: {0}, End: {1}".format(str(start), str(end)))
 
-    return housing[housing['Place Name'] == place_name].to_json(orient='records')
+    return series.to_json(orient='records')
 
 @app.route('/city/<int:place_id>/housing/<int:building_size>', methods=['GET'])
 def get_city_housing_series(place_id, building_size):
